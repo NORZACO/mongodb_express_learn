@@ -1,0 +1,12 @@
+docker exec -it bac3b66be43c bash
+
+root@bac3b66be43c:/# mongo mongodb://localhost:27017 -u rootuser -p rootpass
+
+$(get_venv_name)$ docker exec -it 3a68e211bbb5 mongo --host localhost --port 27017 -u rootuser -p rootpass
+
+
+$(get_venv_name)$ mongo --host localhost --port 27017 -u rootuser -p rootpass
+
+
+
+docker compose  -f "docker-compose.yml" up -d --build mongo-express mongodb 

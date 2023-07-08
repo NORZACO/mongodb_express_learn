@@ -1,0 +1,16 @@
+ 1019  clear
+ 1020  ls
+ 1021  mv docker-composer.yml docker-compose.yml
+ 1022  docker-compose up -d
+ 1023  docker-compose -f docker-compose.yml up
+ 1024  docker-compose down
+ 1025  docker-compose up -d
+ 1026  history > docker_history.txt
+ 1027  docker compose down
+ 1028  docker-compose up -d
+ 1029  docker compose stop
+ 1030  docker compose start
+ 1031  docker compose down
+ 1032  docker-compose up -d
+ 1033  docker ps
+ 1034  docker exec -it 6f03b3983b0c bash

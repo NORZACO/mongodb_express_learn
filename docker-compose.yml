@@ -1,0 +1,68 @@
+# version: "3.8"
+# services:
+#   # FIRST CONTAINER - MongoDB container
+#   mongodb:
+#     image: mongo
+#     container_name: mongodb
+#     ports:
+#       - 27017:27017 # Expose port 27017 from container to the host
+#     volumes:
+#       - data:/data # Mount the 'data' volume to store MongoDB data
+#     environment:
+#       - MONGO_INITDB_ROOT_USERNAME=rootuser # Set MongoDB root username
+#       - MONGO_INITDB_ROOT_PASSWORD=rootpass # Set MongoDB root password
+
+#   # SECOND CONTAINER - Mongo Express container
+#   mongo-express:
+#     image: mongo-express
+#     container_name: mongo-express
+#     restart: always # Always restart the container if it stops
+#     ports:
+#       - 8081:8081 # Expose port 8081 from container to the host
+#     environment:
+#       - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser # Set Mongo Express admin username
+#       - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass # Set Mongo Express admin password
+#       - ME_CONFIG_MONGODB_SERVER=mongodb # Set the MongoDB server hostname as 'mongodb'
+
+# volumes:
+#   data: {} # Define an empty volume named 'data'
+
+# networks:
+#   default:
+#       name: mongodb_network # Use an existing external network named 'mongodb-network'
+
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Expose port 3000 from the container to the host
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/mydatabase # Set the MongoDB connection URL
+    depends_on:
+      - mongodb
+    networks:
+      - mongodb_network
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017" # Expose port 27017 from the container to the host
+    volumes:
+      - data:/data/db # Mount the 'data' volume to store MongoDB data
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=rootuser # Set MongoDB root username
+      - MONGO_INITDB_ROOT_PASSWORD=rootpass # Set MongoDB root password
+    networks:
+      - mongodb_network
+
+volumes:
+  data: {} # Define an empty volume named 'data'
+
+networks:
+  mongodb_network:
+    name: mongodb_network
+
